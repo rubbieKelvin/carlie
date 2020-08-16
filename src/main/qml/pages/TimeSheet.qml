@@ -15,7 +15,8 @@ Page{
         anchors.fill: parent
         
         Components.Navigation{
-            height: 60         
+            id: navigation
+            height: 50   
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.right: parent.right
@@ -23,8 +24,11 @@ Page{
 
         Rectangle{
             id: rectangle
-            anchors.topMargin: 60
-            anchors.fill: parent
+            anchors.left: parent.left
+            anchors.top: navigation.bottom
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            
 
             Components.Board{
                 id: side
@@ -33,11 +37,20 @@ Page{
                 anchors.left: parent.left
                 anchors.top: parent.top
                 strokewidth: [0, 1, 0, 0]
+
+                Components.Calendar{
+                    x: 8
+                    y: 8
+                    width: 284
+                    height: 230
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    
+                }
             }
 
             Components.Board{
                 id: toppanel
-                height: 60
+                height: 50
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.right: parent.right
@@ -46,6 +59,14 @@ Page{
                 anchors.leftMargin: 0
                 strokewidth: [0, 0, 1, 0]
                 color: App.style.light
+
+                Label{
+                    text: qsTr("Saturday, August 15")
+                    font.pixelSize: 14
+                    anchors.verticalCenter: parent.verticalCenter
+                    x: 10
+                    color: App.style.text_a
+                }
             }
             
         }
@@ -54,6 +75,6 @@ Page{
 }
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.5}D{i:4;anchors_height:590;anchors_width:200}D{i:5;anchors_x:314;anchors_y:0}
+    D{i:0;formeditorZoom:0.5}D{i:5;anchors_x:314;anchors_y:0}D{i:4;anchors_height:590;anchors_width:200}
 }
 ##^##*/

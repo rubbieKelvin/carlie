@@ -6,7 +6,7 @@ import "../../js/main.js" as App
 Rectangle {
     id: root
     width: 1000
-    height:  60
+    height:  50
 
     Image {
         y: 16
@@ -38,7 +38,6 @@ Rectangle {
                 font.capitalization: Font.Capitalize
                 font.weight: Font.Medium
                 font.pixelSize: 14
-                font.family: "poppins"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }
@@ -78,7 +77,6 @@ Rectangle {
             width: 105
             height: 18
             text: qsTr("Rubbiekelvin")
-            font.family: "poppins"
             renderType: Text.NativeRendering
             Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
             Layout.fillHeight: false
@@ -91,7 +89,6 @@ Rectangle {
             width: 105
             height: 20
             text: qsTr("69 hrs this week")
-            font.family: "poppins"
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillHeight: false
             Layout.fillWidth: true
@@ -112,9 +109,3 @@ Rectangle {
     }
 
 }
-
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:2}D{i:1;anchors_x:8}
-}
-##^##*/

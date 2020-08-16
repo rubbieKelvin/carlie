@@ -11,6 +11,8 @@ ApplicationWindow{
     width: 1000
     height: 650
 
+    font.family: "poppins"
+
     StackLayout {
         anchors.fill: parent
 
@@ -22,10 +24,3 @@ ApplicationWindow{
     }
 
 }
-
-/*##^##
-Designer {
-    D{i:0;annotation:"1 //;;// Carlie //;;// rubbie kelvin //;;//  //;;// 1597536927";customId:"7caf5ffe-2ab8-4f59-835d-5463e352a606";formeditorZoom:0.5}
-D{i:1}D{i:3;anchors_height:100;anchors_width:100;anchors_x:200;anchors_y:174}
-}
-##^##*/
