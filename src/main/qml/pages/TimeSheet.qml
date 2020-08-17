@@ -39,11 +39,21 @@ Page{
                 strokewidth: [0, 1, 0, 0]
 
                 Components.Calendar{
+                    id: calendar
                     x: 8
                     y: 8
                     width: 284
                     height: 230
                     anchors.horizontalCenter: parent.horizontalCenter
+                    
+                }
+
+                Components.TodoWidget{
+                    anchors.top: calendar.bottom
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.topMargin: 28
                     
                 }
             }
@@ -75,6 +85,7 @@ Page{
 }
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.5}D{i:5;anchors_x:314;anchors_y:0}D{i:4;anchors_height:590;anchors_width:200}
+    D{i:0;formeditorZoom:0.5}D{i:5;anchors_x:314;anchors_y:0}D{i:6;anchors_x:20;anchors_y:278}
+D{i:4;anchors_height:590;anchors_width:200}
 }
 ##^##*/
