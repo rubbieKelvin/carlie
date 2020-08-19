@@ -37,11 +37,44 @@ Rectangle {
     }
 
     ScrollView{
+        anchors.bottomMargin: 0
         anchors.top: header.bottom
         anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        anchors.bottom: footer.top
         anchors.left: parent.left
         anchors.topMargin: 0
+
+        ListView {
+            id: todos
+            anchors.fill: parent
+            delegate: Label{
+                background: Rectangle{
+                    color: App.randomcolor()
+                    radius: 20
+                    anchors.fill: parent
+                }
+                text: todotext
+                color: "#ffffff"
+            }
+
+            model: ListModel {
+            //     ListElement {
+            //         todotext: "Grey"
+            //     }
+
+            //     ListElement {
+            //         todotext: "Red"
+            //     }
+
+            //     ListElement {
+            //         todotext: "Blue"
+            //     }
+
+            //     ListElement {
+            //         todotext: "Green"
+            //     }
+            }
+        }
 
     }
 
@@ -87,6 +120,7 @@ Rectangle {
 
 /*##^##
 Designer {
-    D{i:6;anchors_height:51;anchors_width:241}D{i:8;anchors_x:242;anchors_y:1}
+    D{i:5;anchors_height:160;anchors_width:110}D{i:14;anchors_height:51;anchors_width:241}
+D{i:16;anchors_height:51;anchors_width:241;anchors_x:242;anchors_y:1}
 }
 ##^##*/
