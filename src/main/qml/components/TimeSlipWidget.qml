@@ -24,6 +24,16 @@ ColumnLayout{
         return result;
     }
 
+    function pointtotime(y){
+        let date = datetime.copy();
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        // date.setHours(Math.floor(y/hourgap));
+        date.setMinutes(Math.floor((60*y)/hourgap))
+        return date
+    }
+
     function timetoypoint(time){
         // 0 -> {hourgap} == 60minutes
         let yhour = time.getHours()*hourgap;
@@ -31,7 +41,7 @@ ColumnLayout{
         return yhour+ymin;
     }
 
-    function timetowidth(from, to){
+    function timetoheight(from, to){
         let start = timetoypoint(from);
         let stop  = timetoypoint(to);
 
@@ -77,10 +87,30 @@ ColumnLayout{
     Board {
         id: body
         strokewidth: [0, 1, 0, 0]
-        Layout.preferredHeight: (25*hourgap)
+        Layout.preferredHeight: (24*hourgap)
         Layout.fillHeight: true
         Layout.fillWidth: true
 
+        ToolTip{
+            id: sheettip
+            visible: false
+            text: pointtotime(sheetmouse.mouseY).toLocaleTimeString()
+            delay: 1500
+        }
+        
+        MouseArea {
+            id: sheetmouse
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            hoverEnabled: true
+            onEntered: {sheettip.visible=true}
+            onExited: {sheettip.visible=false}
+            onClicked: {
+                let date = pointtotime(mouseY);
+                console.log(date);
+            }
+        }
+        
 
         Repeater{
             id: line_repeater
@@ -100,7 +130,7 @@ ColumnLayout{
                 width: body.width-padding
                 anchors.horizontalCenter: parent.horizontalCenter
                 y: timetoypoint(modelData.from)
-                height: timetowidth(modelData.from, modelData.to)+30
+                height: timetoheight(modelData.from, modelData.to)+30
             }
         }
     }

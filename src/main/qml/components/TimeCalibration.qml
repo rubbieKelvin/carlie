@@ -43,7 +43,7 @@ ColumnLayout{
     Board {
         id: body
         strokewidth: [0, 1, 0, 0]
-        Layout.preferredHeight: (25*hourgap)
+        Layout.preferredHeight: (24*hourgap)
         Layout.fillWidth: true
         
 
