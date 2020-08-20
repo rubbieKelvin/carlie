@@ -16,6 +16,18 @@ Calendar{
     weekNumbersVisible: false
     minimumDate: new Date(2000, 0, 1)
 
+    
+    function datebg(date, hovered, selected){
+        if (selected){
+            return App.style.primary_a;
+        }else if (isCurrentDate(date)){
+            return App.style.primary_b;
+        }else{
+            return "#f2f2f2";
+        }
+    }
+    
+
     function isCurrentDate(date) {
         const current = new Date();
         return (
@@ -39,15 +51,15 @@ Calendar{
                 anchors.centerIn: parent
                 height: parent.height
                 width: height
-                color: (!isCurrentDate(styleData.date) && styleData.hovered) ? "#f2f2f2":App.style.primary_a
-                radius: isCurrentDate(styleData.date) ? width/2 : 0
-                visible: (isCurrentDate(styleData.date) || styleData.hovered)
+                color: datebg(styleData.date, styleData.hovered, styleData.selected)
+                radius: isCurrentDate(styleData.date) || styleData.selected ? width/2 : 0
+                visible: (isCurrentDate(styleData.date) || styleData.hovered || styleData.selected)
             }
 
             Label{
                 text: styleData.visibleMonth ? styleData.date.getDate() : "-"
                 font.pixelSize: 14
-                color: (!styleData.valid) ? App.style.light : (isCurrentDate(styleData.date) ? "#ffffff" : App.style.text_b)
+                color: (!styleData.valid) ? App.style.light : (isCurrentDate(styleData.date) || styleData.selected ? "#ffffff" : App.style.text_b)
                 // font.family: "poppins"
                 anchors.centerIn: parent
             }
