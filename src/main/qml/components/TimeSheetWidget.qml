@@ -11,10 +11,36 @@ ScrollView {
     contentWidth: 0
     clip: true
 
+    property var selecteddate: new App.DateTime();
+    readonly property var weekdates: getweek(); 
+    
+
+    function getweek(){
+        let result = [
+            selecteddate.copy(),
+            selecteddate.copy(),
+            selecteddate.copy(),
+            selecteddate.copy(),
+            selecteddate.copy(),
+            selecteddate.copy(),
+            selecteddate.copy()
+        ];
+
+        let pw = selecteddate.getDay();
+
+        for (let i=0; i<result.length; i++) {
+            const element = result[i];
+            element.setDate(selecteddate.getDate()-(pw-i));
+        }
+
+        return result;
+    }
+
     TimeCalibration{
         id: cali
         x: 0
         width: 100
+        headerlabel: "Hours"
 
         Component.onCompleted: {
             root.contentHeight = this.height;
@@ -24,10 +50,10 @@ ScrollView {
 
     Repeater {
         id: sheet
-        model: App.getweekdata()
+        model: 7
         delegate: TimeSlipWidget{
-            headerlabel: modelData.title
-            hourlydata: modelData.data
+            datetime: weekdates[modelData]
+            hourlydata: []
             Component.onCompleted: {
                 this.x = root.contentWidth+cali.width;
                 root.contentWidth += this.width;

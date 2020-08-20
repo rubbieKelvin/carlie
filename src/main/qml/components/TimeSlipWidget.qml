@@ -5,24 +5,16 @@ import "../../js/main.js" as App
 
 ColumnLayout{
     id: root
-    width: 160
+    width: 200
     spacing: 0
 
     property int hourgap: 70
     property string linecolor: "#e2e2e2"
-    property int padding: 4
+    property int padding: 20
     property bool headervisible: true
-    property string headerlabel: "Day"
-    property var hourlydata: [
-        {
-            from:   new Date(0, 0, 0, 1, 30),
-            to:     new Date(0, 0, 0, 2)
-        },
-        {
-            from:   new Date(0, 0, 0, 4),
-            to:     new Date(0, 0, 0, 5)
-        }
-    ]
+    property var hourlydata: []
+    property var datetime: new App.DateTime()
+    property string headerlabel: datetime.dayString(true)
 
     function ypoints(){
         let result = [];
@@ -54,6 +46,12 @@ ColumnLayout{
         visible: headervisible
         strokewidth: [0, 1, 0, 0]
 
+        ToolTip{
+            id: headertip
+            visible: false
+            text: qsTr(datetime.toDateString())
+        }
+        
         Label{
             text: headerlabel
             font.pixelSize: 16
@@ -62,6 +60,17 @@ ColumnLayout{
             anchors.fill: parent
             color: App.style.text_a
         }
+        
+        MouseArea {
+            id: headermouse
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            hoverEnabled: true
+            onEntered: {headertip.visible = true}
+            onExited: {headertip.visible = false}
+            onClicked: {}
+        }
+        
     }
     
 

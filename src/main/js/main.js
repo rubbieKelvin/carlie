@@ -7,7 +7,23 @@ const validatenullity = (value, placeholder) => {
 };
 
 class DateTime extends Date{
-    toJSON(){
+
+    copy(){
+        let _ = this.toJSON();
+        return new DateTime(_);
+    }
+
+    dayString(short){
+        let days;
+        if (isnone(short)){
+            days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        }else{
+            days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+        }
+        return days[this.getDay()];
+    }
+
+    toJSONObject(){
         return {
             year: this.getFullYear(),
             month: this.getMonth(),

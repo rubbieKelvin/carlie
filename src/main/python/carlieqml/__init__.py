@@ -7,11 +7,24 @@ class JSON(object):
         for key in kwargs:
             setattr(self, key, kwargs[key])
 
-    def __str__(self):
-        return json.dumps(self.__kwargs__, indent=2)
+    def pair(self, key, value):
+        self.__kwargs__[key] = value
+        setattr(self, key, value)
+
+    def __dict__(self) -> dict:
+        result = dict()
+        for key in self.__kwargs__:
+            result[key] = getattr(self, key)
+        return result
+
+    def __str__(self) -> str:
+        return json.dumps(vars(self), indent=2)
 
     @staticmethod
     def fromjson(jsn:str):
+        """
+            returns a JSON object serialized from str
+        """
         jsn = json.loads(jsn)
         if type(jsn) == dict:
             return JSON(**jsn)
@@ -25,5 +38,15 @@ class JSON(object):
         raise TypeError("json did not serialize to a dict")
 
     def write(self, fileobject:BufferedWriter):
-        json.dump(self.__kwargs__, fileobject, indent=2)
+        json.dump(vars(self), fileobject, indent=2)
+
+    def __repr__(self):
+        dict_ = vars(self)
+        return "<DynamicAttr {keyvalues}>".format(
+            keyvalues=" ".join(
+                [
+                    f"{i}={dict_[i]}," for i in dict_
+                ]
+            ).strip(",")
+        )
 

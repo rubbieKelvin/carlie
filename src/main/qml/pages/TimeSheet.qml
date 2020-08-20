@@ -45,6 +45,11 @@ Page{
                     width: 284
                     height: 202
                     anchors.horizontalCenter: parent.horizontalCenter
+
+                    onClicked:{
+                        let datetime = new App.DateTime(date.toJSON());
+                        timesheet.selecteddate = datetime;
+                    }
                     
                 }
 
@@ -82,6 +87,7 @@ Page{
             }
 
             Components.TimeSheetWidget{
+                id: timesheet
                 anchors.leftMargin: 0
                 anchors.top: toppanel.bottom
                 anchors.right: parent.right
