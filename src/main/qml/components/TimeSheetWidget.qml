@@ -53,7 +53,6 @@ ScrollView {
         model: 7
         delegate: TimeSlipWidget{
             datetime: weekdates[modelData]
-            hourlydata: []
             Component.onCompleted: {
                 this.x = root.contentWidth+cali.width;
                 root.contentWidth += this.width;

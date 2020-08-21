@@ -1,6 +1,9 @@
-// .pragma library
+.pragma library
+
+const inrange = (i, start, stop) => (start < i && i < stop);
 
 const isnone = (value) => (value === null || value === undefined);
+
 const validatenullity = (value, placeholder) => {
     if (isnone(value)) return placeholder;
     else return value;
@@ -50,6 +53,66 @@ class DateTime extends Date{
         return result;
     }
 
+}
+
+class DateRange{
+    /**
+     * Stores data for date ranges
+     * @param {DateTime} from 
+     * @param {DateTime} to 
+     */
+    constructor(from, to){
+        this.from = from;
+        this.to   = to;
+    }
+
+    toString(){
+        return this.from.toJSON()+" - "+this.to.toJSON();
+    }
+
+    elapseByTime(datetime){
+        
+        // normalize hour and minute to a float
+        let norm = (date) => {
+            return date.getHours() + (date.getMinutes() / 100);
+        }
+
+        return inrange(
+            norm(this.from),
+            norm(datetime.from),
+            norm(datetime.to)
+        ) || inrange(
+            norm(this.to),
+            norm(datetime.from),
+            norm(datetime.to)
+        ) 
+    }
+
+    /**
+     * Checks if the date overlaps any of the ranges in the array
+     * @param {Array} array 
+     * @returns {Boolean}
+     */
+
+    elapseAnyByTime(array){
+
+        for (let i = 0; i < array.length; i++) {
+            const element = array[i];
+            let res = this.elapseByTime(element);
+            if (res) {
+                return true;
+            }
+            
+        }
+        return false;
+    }
+
+    toJSON(){
+        let result = {};
+        result.from = this.from;
+        result.to = this.to;
+        return result;
+    }
 }
 
 const style = {
@@ -129,3 +192,31 @@ const getweekdata = () => {
     // console.log(JSON.stringify(result));
     return result;
 }
+
+// test
+function test(){
+    var passed = 0;
+    var failed = 0;
+
+    function assert(value){
+        if (!value) failed += 1;
+        else passed += 1;
+    }
+
+    function test_number_range(){
+        let x1 = 1;
+        let x2 = 10;
+
+        assert(inrange(2, x1, x2))
+        assert(inrange(5, x1, x2))
+        assert(inrange(6, x1, x2))
+        assert(!inrange(11, x1, x2))
+        assert(!inrange(20, x1, x2))
+    }
+
+    console.log("TESTING...");
+    test_number_range();
+    console.log(`PASSED: ${passed} \nFAILED: ${failed}`);
+}
+
+// test();

@@ -27,9 +27,7 @@ ColumnLayout{
     function pointtotime(y){
         let date = datetime.copy();
         date.setHours(0);
-        date.setMinutes(0);
         date.setSeconds(0);
-        // date.setHours(Math.floor(y/hourgap));
         date.setMinutes(Math.floor((60*y)/hourgap))
         return date
     }
@@ -46,6 +44,21 @@ ColumnLayout{
         let stop  = timetoypoint(to);
 
         return stop - start;
+    }
+
+    function createschedule(y){
+        let date = pointtotime(y);
+        let schedule = {
+            timerange: new App.DateRange(date, date.copy()),
+            activity: "New Task",
+            text: "",
+            theme: App.randomcolor()
+        };
+        schedule.timerange.to.setMinutes(schedule.timerange.to.getMinutes()+30);
+
+        if (!schedule.timerange.elapseAnyByTime(hourlydata.map(
+            (e) => e.timerange
+        ))) hourlydata.push(schedule);
     }
     
     Board {
@@ -95,7 +108,7 @@ ColumnLayout{
             id: sheettip
             visible: false
             text: pointtotime(sheetmouse.mouseY).toLocaleTimeString()
-            delay: 1500
+            delay: 500
         }
         
         MouseArea {
@@ -106,8 +119,8 @@ ColumnLayout{
             onEntered: {sheettip.visible=true}
             onExited: {sheettip.visible=false}
             onClicked: {
-                let date = pointtotime(mouseY);
-                console.log(date);
+                createschedule(mouseY)
+                card_repeater.model = hourlydata
             }
         }
         
@@ -129,8 +142,9 @@ ColumnLayout{
             delegate: TimeCard{
                 width: body.width-padding
                 anchors.horizontalCenter: parent.horizontalCenter
-                y: timetoypoint(modelData.from)
-                height: timetoheight(modelData.from, modelData.to)+30
+                y: timetoypoint(modelData.timerange.from)
+                height: timetoheight(modelData.timerange.from, modelData.timerange.to)
+                cardData: modelData
             }
         }
     }

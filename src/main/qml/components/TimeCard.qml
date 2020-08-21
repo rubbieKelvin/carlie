@@ -9,10 +9,9 @@ Rectangle {
     height: 150
     radius: 10
     clip: true
+    color: cardData.theme
 
-    
-    Component.onCompleted: color = App.randomcolor();
-    
+    property var cardData: {}    
 
     Rectangle{
         width: parent.width
