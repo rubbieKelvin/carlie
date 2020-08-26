@@ -16,6 +16,8 @@ ColumnLayout{
     property var datetime: new App.DateTime()
     property string headerlabel: datetime.dayString(true)
 
+    signal pinned(var datetime)
+
     function ypoints(){
         let result = [];
         for (let i=0; i<24; i++) {
@@ -48,6 +50,8 @@ ColumnLayout{
 
     function createschedule(y){
         let date = pointtotime(y);
+        pinned(date)
+        
         let schedule = {
             timerange: new App.DateRange(date, date.copy()),
             activity: "New Task",

@@ -1,8 +1,7 @@
 // .pragma library
 
-const inrange = (i, start, stop) => (start <= i && i <= stop);
-
-const isnone = value => (value === null || value === undefined);
+const inrange = (i, start, stop) => start <= i && i <= stop;
+const isnone = value => value === null || value === undefined;
 
 const mintime = (date1, date2) => {
     if (date1.getHours() < date2.getHours()){
@@ -212,42 +211,6 @@ const randomcolor = () => {
     
     return Random.choice(color);
 };
-
-const getweekdata = () => {
-    function dummydata (){
-        let freq = Random.random(6);
-        let result = [];
-
-        for (let i=0; i<freq; i++) {
-            let $from = Random.random(18);
-            let $to = $from+Random.random(5);
-
-            let $min1 = Random.random(59);
-            let $min2 = Random.random(59);
-
-            result = [...result, {
-                from: new DateTime(0, 0, 0, $from, $min1),
-                to: new DateTime(0, 0, 0, $to, $min2)
-            }];
-            
-        }
-
-        return result;
-    }
-
-    let result =  [
-        {title:"Monday", data: dummydata()},
-        {title:"Tuesday", data: dummydata()},
-        {title:"Wednesday", data: dummydata()},
-        {title:"Thursday", data: dummydata()},
-        {title:"Friday", data: dummydata()},
-        {title:"Saturday", data: dummydata()},
-        {title:"Sunday", data: dummydata()},
-    ];
-
-    // console.log(JSON.stringify(result));
-    return result;
-}
 
 // test
 function test(){

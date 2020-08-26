@@ -1,3 +1,6 @@
 const scheduler = {
-    data: []
+    data: [],
+    newtodo(){
+        
+    }
 };

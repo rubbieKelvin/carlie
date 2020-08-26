@@ -124,7 +124,59 @@ Rectangle {
         onClosed: {
             height=0;
             let data = taskedit.getdata();
-            console.log(JSON.stringify(data));
+            
+            // validate time: check if from < to;
+            let from = new App.DateTime(); 
+            let to   = new App.DateTime();
+
+            from.setHours(data.from.hour);
+            from.setMinutes(data.from.minute);
+
+            to.setHours(data.to.hour);
+            to.setMinutes(data.to.minute);
+
+            if (App.mintime(from, to) === from){
+                cardData.activity = data.name;
+
+
+                // time range
+                let prevtimerange = cardData.timerange;
+                
+                let timerangefrom = new App.DateTime(cardData.timerange.from.toJSON());
+                timerangefrom.setHours(data.from.hour);
+                timerangefrom.setMinutes(data.from.minute);
+                
+                let timerangeto = new App.DateTime(cardData.timerange.to.toJSON());
+                timerangeto.setHours(data.to.hour);
+                timerangeto.setMinutes(data.to.minute);
+
+                let timerange = new App.DateRange(timerangefrom, timerangeto);
+                cardData.timerange = timerange;
+
+                // check if it overlaps
+
+                // update
+                headertip.text = cardData.activity;
+            }else{
+                errdialog.title = "Error";
+                errdialoglabel.text = "starting time should be less than ending time!";
+                errdialog.open();
+            }
+        }
+    }
+
+    Dialog{
+        id: errdialog
+        clip: true
+        dim: true
+        width: 300
+        height: 180
+        standardButtons: Dialog.Ok
+
+        Label{
+            id: errdialoglabel
+            wrapMode: Text.WordWrap
+            anchors.fill: parent
         }
     }
 }
