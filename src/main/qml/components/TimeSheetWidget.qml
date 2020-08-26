@@ -13,8 +13,9 @@ ScrollView {
 
     property var selecteddate: new App.DateTime();
     property int gap: 100
-    readonly property var weekdates: getweek(); 
-    
+    property var weekdates: getweek();
+
+    signal weekChanged();
 
     function getweek(){
         let result = [
@@ -37,6 +38,12 @@ ScrollView {
         return result;
     }
 
+    function setDate(date){
+        this.selecteddate = date;
+        this.weekdates = getweek();
+        weekChanged();
+    }
+
     TimeCalibration{
         id: cali
         x: 0
@@ -54,11 +61,40 @@ ScrollView {
         id: sheet
         model: 7
         delegate: TimeSlipWidget{
-            datetime: weekdates[modelData]
+            id: aslip
+            datetime: root.weekdates[modelData]
+            timeline: App.scheduler.gettodos(datetime, [])
             hourgap: gap
+
             Component.onCompleted: {
                 this.x = root.contentWidth+cali.width;
                 root.contentWidth += this.width;
+            }
+
+            onPinned: {
+                if (App.scheduler.newtodo(datetime, carlie.generateuuid()) !== null){
+                    datetime = weekdates[modelData];
+                    timeline = App.scheduler.gettodos(datetime, []);
+
+                }else{
+                    // there was an error creating task
+                }
+            }
+
+            
+            Connections {
+                target: root
+                
+                function onWeekChanged(){
+                    aslip.timeline = App.scheduler.gettodos(aslip.datetime, []);
+                }
+            }
+            
+
+            onTaskEdited: {
+                App.scheduler.edittodo(id, datetime, newdata);
+                this.datetime = weekdates[modelData];
+                this.timeline = App.scheduler.gettodos(this.datetime, []);
             }
             
         }

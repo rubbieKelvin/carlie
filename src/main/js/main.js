@@ -1,4 +1,4 @@
-// .pragma library
+.pragma library
 
 const inrange = (i, start, stop) => start <= i && i <= stop;
 const isnone = value => value === null || value === undefined;
@@ -108,6 +108,12 @@ class DateTime extends Date{
         return result;
     }
 
+    static clone(date){
+        if (typeof date === String){
+            return new DateTime(date);
+        }
+        return new DateTime(date.toJSON());
+    }
 }
 
 class DateRange{
@@ -212,30 +218,99 @@ const randomcolor = () => {
     return Random.choice(color);
 };
 
-// test
-function test(){
-    var passed = 0;
-    var failed = 0;
+const scheduler = {
+    data: {
+        todos: {
 
-    function assert(value){
-        if (!value) failed += 1;
-        else passed += 1;
+        }
+    },
+
+    /**
+     * 
+     * @param {Date} date 
+     */
+    createdatedataifnotexisting(date){
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+
+        if (this.data.todos[year] === undefined){
+            this.data.todos[year] = {};
+            this.data.todos[year][month] = {};
+            this.data.todos[year][month][day] = [];
+        }else if (this.data.todos[year][month] === undefined){
+            this.data.todos[year][month] = {};
+            this.data.todos[year][month][day] = [];
+        }else if (this.data.todos[year][month][day] === undefined){
+            this.data.todos[year][month][day] = [];
+        }
+
+        return this.data.todos[year][month][day];
+    },
+  
+    /**
+     * 
+     * @param {Date} date 
+     */
+    newtodo(date, uuid){
+        let daytodos = this.createdatedataifnotexisting(date);
+        let schedule = {
+            id: uuid,
+            timerange: new DateRange(date, DateTime.clone(date)),
+            activity: "New Todo",
+            text: "",
+            theme: randomcolor()
+        };
+        schedule.timerange.to.setMinutes(
+            schedule.timerange.to.getMinutes() + 5
+        );
+        if (!schedule.timerange.elapseAnyByTime(daytodos.map(
+            (e) => e.timerange
+        ))){
+            daytodos.push(schedule);
+            return schedule;
+        }else{
+            return null;
+        }
+    },
+
+    /**
+     * 
+     * @param {Date} date 
+     */
+    gettodos(date, placeholder){
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+
+        if (this.data.todos[year] !== undefined){
+            if (this.data.todos[year][month] !== undefined){
+                if (this.data.todos[year][month][day] !== undefined){
+                     return this.data.todos[year][month][day];
+                }
+            }
+        }
+
+        return placeholder;
+    },
+
+    gettodo(date, id){
+        return this.gettodos(date, []).filter((i) => i.id===id)[0];
+    },
+
+    /**
+     * 
+     * @param {String} id 
+     * @param {Object} payload 
+     */
+    edittodo(id, date, payload){
+        let todo = this.gettodo(date, id);
+        if (todo===undefined){
+            return null;
+        }else{
+            todo.timerange = (payload.timerange===undefined)?todo.timerange:payload.timerange;
+            todo.activity = (payload.activity===undefined)?todo.activity:payload.activity;
+            todo.text = (payload.text===undefined)?todo.text:payload.text;
+        }
     }
-
-    function test_number_range(){
-        let x1 = 1;
-        let x2 = 10;
-
-        assert(inrange(2, x1, x2))
-        assert(inrange(5, x1, x2))
-        assert(inrange(6, x1, x2))
-        assert(!inrange(11, x1, x2))
-        assert(!inrange(20, x1, x2))
-    }
-
-    console.log("TESTING...");
-    test_number_range();
-    console.log(`PASSED: ${passed} \nFAILED: ${failed}`);
-}
-
-// test();
+};

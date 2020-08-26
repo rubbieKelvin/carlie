@@ -48,7 +48,7 @@ Page{
 
                     onClicked:{
                         let datetime = new App.DateTime(date.toJSON());
-                        timesheet.selecteddate = datetime;
+                        timesheet.setDate(datetime);
                     }
                     
                 }

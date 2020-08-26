@@ -12,11 +12,12 @@ ColumnLayout{
     property string linecolor: "#e2e2e2"
     property int padding: 20
     property bool headervisible: true
-    property var hourlydata: []
+    property var timeline: []
     property var datetime: new App.DateTime()
     property string headerlabel: datetime.dayString(true)
 
     signal pinned(var datetime)
+    signal taskEdited(string id, var newdata)
 
     function ypoints(){
         let result = [];
@@ -50,19 +51,7 @@ ColumnLayout{
 
     function createschedule(y){
         let date = pointtotime(y);
-        pinned(date)
-        
-        let schedule = {
-            timerange: new App.DateRange(date, date.copy()),
-            activity: "New Task",
-            text: "",
-            theme: App.randomcolor()
-        };
-        schedule.timerange.to.setMinutes(schedule.timerange.to.getMinutes()+5);
-
-        if (!schedule.timerange.elapseAnyByTime(hourlydata.map(
-            (e) => e.timerange
-        ))) hourlydata.push(schedule);
+        pinned(date);
     }
     
     Board {
@@ -123,8 +112,7 @@ ColumnLayout{
             onEntered: {sheettip.visible=true}
             onExited: {sheettip.visible=false}
             onClicked: {
-                createschedule(mouseY)
-                card_repeater.model = hourlydata
+                createschedule(mouseY);
             }
         }
         
@@ -142,13 +130,17 @@ ColumnLayout{
 
         Repeater{
             id: card_repeater
-            model: hourlydata
+            model: timeline
             delegate: TimeCard{
                 width: body.width-padding
                 anchors.horizontalCenter: parent.horizontalCenter
                 y: timetoypoint(modelData.timerange.from)
                 height: timetoheight(modelData.timerange.from, modelData.timerange.to)
                 cardData: modelData
+
+                onEdited: {
+                    taskEdited(modelData.id, payload)
+                }
             }
         }
     }

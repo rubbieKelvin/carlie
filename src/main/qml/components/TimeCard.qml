@@ -16,6 +16,8 @@ Rectangle {
 
     property var cardData: ({}) // TimeSlipWidget.qml > createschedule() > schedule;
 
+    signal edited(var payload);
+
     ToolTip{
         id: headertip
         visible: false
@@ -62,12 +64,18 @@ Rectangle {
 
     Label {
         id: description
+        color: "#ffffff"
         text: qsTr(cardData.text)
+        textFormat: Text.RichText
+        wrapMode: Text.WordWrap
+        anchors.rightMargin: 10
+        anchors.leftMargin: 10
+        anchors.bottomMargin: 10
         anchors.top: row_.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        anchors.topMargin: 0
+        anchors.topMargin: 5
     }
 
     MouseArea {
@@ -136,7 +144,6 @@ Rectangle {
             to.setMinutes(data.to.minute);
 
             if (App.mintime(from, to) === from){
-                cardData.activity = data.name;
 
 
                 // time range
@@ -150,13 +157,15 @@ Rectangle {
                 timerangeto.setHours(data.to.hour);
                 timerangeto.setMinutes(data.to.minute);
 
-                let timerange = new App.DateRange(timerangefrom, timerangeto);
-                cardData.timerange = timerange;
-
                 // check if it overlaps
+                edited({
+                    timerange: new App.DateRange(timerangefrom, timerangeto),
+                    activity: data.name,
+                    text: data.description,
+                });
 
                 // update
-                headertip.text = cardData.activity;
+                headertip.text = root.cardData.activity;
             }else{
                 errdialog.title = "Error";
                 errdialoglabel.text = "starting time should be less than ending time!";
