@@ -1,8 +1,48 @@
-.pragma library
+// .pragma library
 
-const inrange = (i, start, stop) => (start < i && i < stop);
+const inrange = (i, start, stop) => (start <= i && i <= stop);
 
-const isnone = (value) => (value === null || value === undefined);
+const isnone = value => (value === null || value === undefined);
+
+const mintime = (date1, date2) => {
+    if (date1.getHours() < date2.getHours()){
+        return date1;
+    }else if (date1.getHours() === date2.getHours()){
+        if (date1.getMinutes() < date2.getMinutes()){
+            return date1;
+        }else if(date1.getMinutes() < date2.getMinutes()){
+            return null;
+        }else{
+            return date2;
+        }
+    }else{
+        return date2;
+    }
+};
+
+const maxtime = (date1, date2) => {
+    if (date1.getHours() > date2.getHours()){
+        return date1;
+    }else if (date1.getHours() === date2.getHours()){
+        if (date1.getMinutes() > date2.getMinutes()){
+            return date1;
+        }else if(date1.getMinutes() > date2.getMinutes()){
+            return null;
+        }else{
+            return date2;
+        }
+    }else{
+        return date2;
+    }
+};
+
+const range = (from, to) => {
+    let result = [];
+    for (let i=from; i<to; i++) {
+        result = [...result, i];
+    }
+    return result;
+}
 
 const validatenullity = (value, placeholder) => {
     if (isnone(value)) return placeholder;
@@ -10,6 +50,11 @@ const validatenullity = (value, placeholder) => {
 };
 
 class DateTime extends Date{
+
+    static to12Hour(hr){
+        if (hr===0) return 12;
+        else return hr%12;
+    }
 
     copy(){
         let _ = this.toJSON();
@@ -26,6 +71,12 @@ class DateTime extends Date{
         return days[this.getDay()];
     }
 
+    setFrom12Hours(hr, am){
+        if (am && hr===12) hr=0;
+        else if (!am && hr<12) hr+=12;
+        this.setHours(hr);
+    }
+
     toJSONObject(){
         return {
             year: this.getFullYear(),
@@ -37,6 +88,11 @@ class DateTime extends Date{
             seconds: this.getSeconds(),
             milliseconds: this.getMilliseconds()
         };
+    }
+
+    toLocaleTimeString(){
+        let string = super.toLocaleTimeString();
+        return string.slice(0, -4);
     }
 
     timeDelta(datetime){

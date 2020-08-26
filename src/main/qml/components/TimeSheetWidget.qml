@@ -12,6 +12,7 @@ ScrollView {
     clip: true
 
     property var selecteddate: new App.DateTime();
+    property int gap: 100
     readonly property var weekdates: getweek(); 
     
 
@@ -41,6 +42,7 @@ ScrollView {
         x: 0
         width: 100
         headerlabel: "Hours"
+        hourgap: gap
 
         Component.onCompleted: {
             root.contentHeight = this.height;
@@ -53,6 +55,7 @@ ScrollView {
         model: 7
         delegate: TimeSlipWidget{
             datetime: weekdates[modelData]
+            hourgap: gap
             Component.onCompleted: {
                 this.x = root.contentWidth+cali.width;
                 root.contentWidth += this.width;

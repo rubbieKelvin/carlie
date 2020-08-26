@@ -5,7 +5,7 @@ import "../../js/main.js" as App
 
 ColumnLayout{
     id: root
-    width: 200
+    width: 300
     spacing: 0
 
     property int hourgap: 70
@@ -54,7 +54,7 @@ ColumnLayout{
             text: "",
             theme: App.randomcolor()
         };
-        schedule.timerange.to.setMinutes(schedule.timerange.to.getMinutes()+30);
+        schedule.timerange.to.setMinutes(schedule.timerange.to.getMinutes()+5);
 
         if (!schedule.timerange.elapseAnyByTime(hourlydata.map(
             (e) => e.timerange
@@ -114,7 +114,7 @@ ColumnLayout{
         MouseArea {
             id: sheetmouse
             anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
+            cursorShape: Qt.CrossCursor
             hoverEnabled: true
             onEntered: {sheettip.visible=true}
             onExited: {sheettip.visible=false}
