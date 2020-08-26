@@ -86,6 +86,7 @@ ScrollView {
                 target: root
                 
                 function onWeekChanged(){
+                    aslip.datetime = weekdates[modelData];
                     aslip.timeline = App.scheduler.gettodos(aslip.datetime, []);
                 }
             }
@@ -93,8 +94,8 @@ ScrollView {
 
             onTaskEdited: {
                 App.scheduler.edittodo(id, datetime, newdata);
-                this.datetime = weekdates[modelData];
-                this.timeline = App.scheduler.gettodos(this.datetime, []);
+                datetime = weekdates[modelData];
+                timeline = App.scheduler.gettodos(datetime, []);
             }
             
         }
