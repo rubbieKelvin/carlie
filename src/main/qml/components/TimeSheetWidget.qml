@@ -131,6 +131,12 @@ ScrollView {
         color: "#33ff0000"
         y: linerpoint()
     }
+
+    TimeAutoSync{
+        onDateUpdated:{
+            liner.y = linerpoint();
+        }
+    }
 }
 
 /*##^##

@@ -33,7 +33,7 @@ ColumnLayout{
     function getAbsHour(){
         let date = new Date();
 
-        if (date.getMinutes() == 0) return date.getHours();
+        if (date.getMinutes() === 0) return date.getHours();
         return -1;
     }
 
@@ -66,21 +66,32 @@ ColumnLayout{
             id: line_repeater
             model: timenpoint()
             delegate: Label{
+                id: cuur_lb__
                 y: modelData[0]-(height/2)
                 width: body.width
-                color: (getAbsHour()==modelData)?"red":textcolor
+                color: (getAbsHour()===modelData[1])?"red":textcolor
                 text: String(modelData[1])+" hrs"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
+
+                Connections{
+                    target: timesync
+
+                    function onDateUpdated(datetime){
+                        cuur_lb__.color = (getAbsHour()===modelData[1])?"red":textcolor;
+                    }
+                }
             }
         }
 
         Label{
+            id: tagtext
             y: labelpoint()-(height/2)
-            width: body.width
+            width: body.width/2
             color: "#ffffff"
             text: new Date().toTimeString().slice(0, -3)
+            font.pixelSize: 10
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             anchors.horizontalCenter: parent.horizontalCenter
@@ -90,6 +101,15 @@ ColumnLayout{
                 anchors.margins: -5
                 radius: 5
             }
+        }
+    }
+
+    TimeAutoSync{
+        id: timesync
+        onDateUpdated: {
+            tagtext.y = labelpoint()-(tagtext.height/2)
+            tagtext.text = datetime.toTimeString().slice(0, -3);
+            tagtext.visible = getAbsHour() === -1
         }
     }
 }

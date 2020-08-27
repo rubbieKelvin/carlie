@@ -7,7 +7,7 @@ from fbs_runtime.application_context.PySide2 import ApplicationContext
 filedir = os.path.split(__file__)[0]
 
 if __name__ == '__main__':
-    os.environ["QT_QUICK_CONTROLS_STYLE"] = "Material"
+    os.environ["QT_QUICK_CONTROLS_STYLE"] = "Fusion"
 
     appctxt = ApplicationContext()       # 1. Instantiate ApplicationContext
     carlie = Carlie()
