@@ -261,6 +261,13 @@ const scheduler = {
      */
     newtodo(date, uuid){
         let daytodos = this.createdatedataifnotexisting(date);
+        let now = new Date();
+
+
+        // you cannot edit the past
+        if (now>date) return null;
+
+
         let schedule = {
             id: uuid,
             timerange: new DateRange(date, DateTime.clone(date)),
@@ -316,6 +323,11 @@ const scheduler = {
      */
     edittodo(id, date, payload){
         let todo = this.gettodo(date, id);
+        let now = new Date();
+
+        // you cannot edit the past
+        if (now>date) return null;
+
 
         if (todo===undefined){
             return null;

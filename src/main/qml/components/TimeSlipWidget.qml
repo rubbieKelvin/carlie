@@ -115,6 +115,12 @@ ColumnLayout{
             onClicked: {
                 createschedule(mouseY);
             }
+            onMouseYChanged:{
+                let now = new Date();
+                let time = pointtotime(mouseY);
+                if (now>time) cursorShape = Qt.ForbiddenCursor;
+                else cursorShape = Qt.CrossCursor;
+            }
         }
         
 
