@@ -5,7 +5,6 @@ import "../../js/main.js" as App
 import QtQuick.Dialogs 1.0
 import QtQuick.Controls.Material 2.0
 
-
 Rectangle {
     id: root
     width: 250
@@ -16,7 +15,8 @@ Rectangle {
 
     property var cardData: ({}) // TimeSlipWidget.qml > createschedule() > schedule;
 
-    signal edited(var payload);
+    signal edited(var payload)
+    signal cardDeleted
 
     ToolTip{
         id: headertip
@@ -37,7 +37,7 @@ Rectangle {
             id: timelabel
             width: 46
             color: "#ffffff"
-            text: qsTr(cardData.timerange.from.toTimeString())
+            text: qsTr(App.date(cardData.timerange.from).toTimeString())
             Layout.fillHeight: true
             Layout.fillWidth: true
             styleColor: "#ffffff"
@@ -100,6 +100,12 @@ Rectangle {
             width: dialog.width
             theme: cardData.theme
             Material.accent: theme
+
+            onFinished: {
+                dialog.close()
+            }
+
+            onDeleted: cardDeleted()
             
         }
 
@@ -117,12 +123,12 @@ Rectangle {
             anim.start();
             taskedit.setdata({
                 from: {
-                    hour: cardData.timerange.from.getHours(),
-                    minute: cardData.timerange.from.getMinutes()
+                    hour: App.date(cardData.timerange.from).getHours(),
+                    minute: App.date(cardData.timerange.from).getMinutes()
                 },
                 to: {
-                    hour: cardData.timerange.to.getHours(),
-                    minute: cardData.timerange.to.getMinutes()
+                    hour: App.date(cardData.timerange.to).getHours(),
+                    minute: App.date(cardData.timerange.to).getMinutes()
                 },
                 name: cardData.activity,
                 description: cardData.text
@@ -149,11 +155,11 @@ Rectangle {
                 // time range
                 let prevtimerange = cardData.timerange;
                 
-                let timerangefrom = new App.DateTime(cardData.timerange.from.toJSON());
+                let timerangefrom = new App.DateTime(App.date(cardData.timerange.from).toJSON());
                 timerangefrom.setHours(data.from.hour);
                 timerangefrom.setMinutes(data.from.minute);
                 
-                let timerangeto = new App.DateTime(cardData.timerange.to.toJSON());
+                let timerangeto = new App.DateTime(App.date(cardData.timerange.to).toJSON());
                 timerangeto.setHours(data.to.hour);
                 timerangeto.setMinutes(data.to.minute);
 

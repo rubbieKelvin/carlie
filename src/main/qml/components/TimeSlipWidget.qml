@@ -18,6 +18,7 @@ ColumnLayout{
 
     signal pinned(var datetime)
     signal taskEdited(string id, var newdata)
+    signal deleteRequest(string id)
 
     function ypoints(){
         let result = [];
@@ -134,13 +135,15 @@ ColumnLayout{
             delegate: TimeCard{
                 width: body.width-padding
                 anchors.horizontalCenter: parent.horizontalCenter
-                y: timetoypoint(modelData.timerange.from)
-                height: timetoheight(modelData.timerange.from, modelData.timerange.to)
+                y: timetoypoint(App.date(modelData.timerange.from))
+                height: timetoheight(App.date(modelData.timerange.from), App.date(modelData.timerange.to))
                 cardData: modelData
 
                 onEdited: {
                     taskEdited(modelData.id, payload)
                 }
+
+                onCardDeleted: deleteRequest(modelData.id)
             }
         }
     }

@@ -116,6 +116,11 @@ class DateTime extends Date{
     }
 }
 
+const date = (dateobj) => {
+    if (typeof dateobj === "string") return new DateTime(dateobj);
+    else return dateobj;
+}
+
 class DateRange{
     /**
      * Stores data for date ranges
@@ -134,8 +139,8 @@ class DateRange{
     elapseByTime(datetime){
         
         // normalize hour and minute to a float
-        let norm = (date) => {
-            return date.getHours() + (date.getMinutes() / 100);
+        let norm = (d) => {
+            return date(d).getHours() + (date(d).getMinutes() / 100);
         }
 
         return inrange(
@@ -225,6 +230,8 @@ const scheduler = {
         }
     },
 
+    carlie: {},     // carlie is a python object, so in this js file its empty, carlieqml > core.py > Carlie
+
     /**
      * 
      * @param {Date} date 
@@ -268,6 +275,10 @@ const scheduler = {
             (e) => e.timerange
         ))){
             daytodos.push(schedule);
+            this.carlie.savejson(
+                JSON.stringify(this.data)
+            );
+            
             return schedule;
         }else{
             return null;
@@ -286,7 +297,7 @@ const scheduler = {
         if (this.data.todos[year] !== undefined){
             if (this.data.todos[year][month] !== undefined){
                 if (this.data.todos[year][month][day] !== undefined){
-                     return this.data.todos[year][month][day];
+                    return this.data.todos[year][month][day];
                 }
             }
         }
@@ -305,12 +316,47 @@ const scheduler = {
      */
     edittodo(id, date, payload){
         let todo = this.gettodo(date, id);
+
         if (todo===undefined){
             return null;
         }else{
-            todo.timerange = (payload.timerange===undefined)?todo.timerange:payload.timerange;
-            todo.activity = (payload.activity===undefined)?todo.activity:payload.activity;
-            todo.text = (payload.text===undefined)?todo.text:payload.text;
+            // check for lapses
+
+            let samples = this.gettodos(date, []).filter((i) => i.id !==id);
+            let timerange = (payload.timerange===undefined)?todo.timerange:payload.timerange;
+
+            if (!timerange.elapseAnyByTime(samples.map(
+                (e) => e.timerange
+            ))){
+                todo.timerange = timerange;
+                todo.activity = (payload.activity===undefined)?todo.activity:payload.activity;
+                todo.text = (payload.text===undefined)?todo.text:payload.text;
+            }else{
+                return false;
+            }
+
         }
+        this.carlie.savejson(
+            JSON.stringify(this.data)
+        );
+        return true;
+    },
+
+    deleteTodo(id, date){
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+
+        if (this.data.todos[year] !== undefined){
+            if (this.data.todos[year][month] !== undefined){
+                if (this.data.todos[year][month][day] !== undefined){
+                    this.data.todos[year][month][day] = this.data.todos[year][month][day].filter(i => i.id !== id);
+                }
+            }
+        }
+
+        this.carlie.savejson(
+            JSON.stringify(this.data)
+        );
     }
 };

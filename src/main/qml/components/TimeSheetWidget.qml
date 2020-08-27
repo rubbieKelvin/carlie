@@ -44,6 +44,10 @@ ScrollView {
         weekChanged();
     }
 
+    function reload() {
+        weekChanged();
+    }
+
     TimeCalibration{
         id: cali
         x: 0
@@ -93,7 +97,18 @@ ScrollView {
             
 
             onTaskEdited: {
-                App.scheduler.edittodo(id, datetime, newdata);
+                let result = App.scheduler.edittodo(id, datetime, newdata);
+                let errormsg = ""
+
+                if (result===null) errormsg = "could not find todo!";
+                else if(!result) errormsg = "task overlapse!";
+
+                datetime = weekdates[modelData];
+                timeline = App.scheduler.gettodos(datetime, []);
+            }
+
+            onDeleteRequest: {
+                App.scheduler.deleteTodo(id, datetime);
                 datetime = weekdates[modelData];
                 timeline = App.scheduler.gettodos(datetime, []);
             }

@@ -10,6 +10,10 @@ Page{
     width: 1000
     height: 650
 
+    function reloadtimesheet() {
+        timesheet.reload();
+    }
+
     Rectangle{
         color: App.style.light
         anchors.fill: parent
@@ -78,7 +82,7 @@ Page{
                 color: App.style.light
 
                 Label{
-                    text: qsTr("Saturday, August 15")
+                    text: qsTr(new Date().toDateString())
                     font.pixelSize: 14
                     anchors.verticalCenter: parent.verticalCenter
                     x: 10

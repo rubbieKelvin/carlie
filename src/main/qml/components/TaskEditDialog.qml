@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.9
 import QtQuick.Layouts 1.9
+import QtQuick.Controls.Material 2.0
 import "../../js/main.js" as App
 
 Rectangle {
@@ -9,6 +10,8 @@ Rectangle {
     height: 400
 
     property string theme
+    signal finished
+    signal deleted
 
     function setdata(data) {
         timefrom.sethour(data.from.hour);
@@ -59,24 +62,34 @@ Rectangle {
                 id: activityname
                 color: "#ffffff"
                 text: qsTr("Label")
-                font.pixelSize: 14
+                font.pixelSize: 12
                 placeholderText: "Title..."
                 verticalAlignment: Text.AlignVCenter
                 Layout.fillHeight: true
                 Layout.fillWidth: true
+                Material.accent: "#44ffffff"
                 background: Rectangle{
                     color: "transparent"
                 }
+
+                onAccepted: finished()
             }
 
             RoundButton {
                 id: roundButton
-                text: "+"
+                width: 40
+                height: 40
+                Layout.preferredHeight: 40
+                Layout.preferredWidth: 40
+                icon.source: "../../res/images/trash-empty.png"
+                flat: true
+                onClicked: deleted()
             }
         }
     }
 
     ColumnLayout {
+        anchors.bottomMargin: 8
         anchors.rightMargin: 8
         anchors.leftMargin: 8
         anchors.top: header.bottom
@@ -95,6 +108,7 @@ Rectangle {
                 x: 8
                 y: 85
                 text: qsTr("From")
+                font.pixelSize: 12
             }
 
             TimeInput {
@@ -123,6 +137,7 @@ Rectangle {
                 x: 8
                 y: 85
                 text: qsTr("To")
+                font.pixelSize: 12
             }
 
             TimeInput {
@@ -141,7 +156,9 @@ Rectangle {
             id: description
             width: 310
             height: 148
-            wrapMode: Text.WordWrap
+            textFormat: Text.RichText
+            font.pixelSize: 12
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             Layout.fillHeight: true
             Layout.fillWidth: true
             placeholderText: qsTr("Description")

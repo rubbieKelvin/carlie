@@ -17,10 +17,15 @@ ApplicationWindow{
         anchors.fill: parent
 
         Pages.TimeSheet{
+            id: tspage
             width: parent.width
             height: parent.height
-            
         }
     }
 
+    Component.onCompleted: {
+        App.scheduler.carlie = carlie;
+        App.scheduler.data = JSON.parse(carlie.getData());
+        tspage.reloadtimesheet()
+    }
 }
