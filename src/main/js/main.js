@@ -326,7 +326,17 @@ const scheduler = {
         let now = new Date();
 
         // you cannot edit the past
-        if (now>date) return null;
+        if ((now.getFullYear() === date.getFullYear())  && (now.getMonth() === date.getMonth()) && (now.getDate() === date.getDate())){
+            if (now.getHours() > payload.timerange.from.getHours()){
+                return null;
+            }else if (now.getHours() === payload.timerange.from.getHours()){
+                if (now.getMinutes() > payload.timerange.from.getMinutes()){
+                    return null;
+                }
+            }
+        }else if (now>date) {
+            return null
+        }
 
 
         if (todo===undefined){
@@ -358,6 +368,22 @@ const scheduler = {
         let year = date.getFullYear();
         let month = date.getMonth();
         let day = date.getDate();
+
+        let todo = this.gettodo(date, id);
+        let now = new Date();
+
+        // you cannot delete the past
+        if ((now.getFullYear() === date.getFullYear())  && (now.getMonth() === date.getMonth()) && (now.getDate() === date.getDate())){
+            if (now.getHours() > todo.timerange.from.getHours()){
+                return null;
+            }else if (now.getHours() === todo.timerange.from.getHours()){
+                if (now.getMinutes() > todo.timerange.from.getMinutes()){
+                    return null;
+                }
+            }
+        }else if (now>date) {
+            return null
+        }
 
         if (this.data.todos[year] !== undefined){
             if (this.data.todos[year][month] !== undefined){
