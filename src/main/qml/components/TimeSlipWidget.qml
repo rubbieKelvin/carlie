@@ -5,7 +5,7 @@ import "../../js/main.js" as App
 
 ColumnLayout{
     id: root
-    width: 300
+    width: 250
     spacing: 0
 
     property int hourgap: 70

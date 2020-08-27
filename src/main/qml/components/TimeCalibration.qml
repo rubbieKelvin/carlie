@@ -22,6 +22,21 @@ ColumnLayout{
         return result;
     }
 
+    function labelpoint(){
+        // 0 -> {hourgap} == 60minutes
+        let time = new Date();
+        let yhour = time.getHours()*gap;
+        let ymin  = (time.getMinutes()*gap)/60;
+        return yhour+ymin;
+    }
+
+    function getAbsHour(){
+        let date = new Date();
+
+        if (date.getMinutes() == 0) return date.getHours();
+        return -1;
+    }
+
     Board {
         id: header
         strokewidth: [0, 1, 0, 0]
@@ -53,11 +68,27 @@ ColumnLayout{
             delegate: Label{
                 y: modelData[0]-(height/2)
                 width: body.width
-                color: textcolor
+                color: (getAbsHour()==modelData)?"red":textcolor
                 text: String(modelData[1])+" hrs"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
+            }
+        }
+
+        Label{
+            y: labelpoint()-(height/2)
+            width: body.width
+            color: "#ffffff"
+            text: new Date().toTimeString().slice(0, -3)
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            visible: getAbsHour() === -1
+            background: Rectangle{
+                color: "red"
+                anchors.margins: -5
+                radius: 5
             }
         }
     }

@@ -17,6 +17,14 @@ ScrollView {
 
     signal weekChanged();
 
+    function linerpoint(){
+        // 0 -> {hourgap} == 60minutes
+        let time = new Date();
+        let yhour = time.getHours()*gap;
+        let ymin  = (time.getMinutes()*gap)/60;
+        return yhour+ymin+45; // 45 is the header height of all time slip; this would have to be manually updated
+    }
+
     function getweek(){
         let result = [
             selecteddate.copy(),
@@ -115,4 +123,18 @@ ScrollView {
             
         }
     }
+
+    Rectangle {
+        id: liner
+        width: root.contentWidth
+        height: 1
+        color: "#33ff0000"
+        y: linerpoint()
+    }
 }
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:0.75}
+}
+##^##*/
