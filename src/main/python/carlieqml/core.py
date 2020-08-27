@@ -10,7 +10,9 @@ class Carlie(QtCore.QObject):
     if FIRSTRUN:
         with open(FILEPATH, "w") as file:
             json.dump(dict(
-                application=dict()
+                application=dict(),
+                todos=dict(),
+                activities=list()
             ), file, indent=2)
 
     firstRun = QtCore.Signal()
@@ -31,6 +33,7 @@ class Carlie(QtCore.QObject):
     @QtCore.Slot(str)
     def savejson(self, jstring:str):
         self.data.update(json.loads(jstring))
+        self.data["activities"] = list(set(self.data["activities"]))
 
         with open(Carlie.FILEPATH, "w") as file:
             json.dump(self.data, file, indent=2)

@@ -225,9 +225,8 @@ const randomcolor = () => {
 
 const scheduler = {
     data: {
-        todos: {
-
-        }
+        todos: {},
+        activities: []
     },
 
     carlie: {},     // carlie is a python object, so in this js file its empty, carlieqml > core.py > Carlie
@@ -353,6 +352,8 @@ const scheduler = {
                 todo.timerange = timerange;
                 todo.activity = (payload.activity===undefined)?todo.activity:payload.activity;
                 todo.text = (payload.text===undefined)?todo.text:payload.text;
+
+                this.data.activities.push(payload.activity);
             }else{
                 return false;
             }
