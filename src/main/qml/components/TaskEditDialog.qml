@@ -165,11 +165,3 @@ Rectangle {
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:2;anchors_height:100;anchors_width:100}D{i:1;anchors_height:200;anchors_width:200;anchors_x:0;anchors_y:0}
-D{i:9;anchors_height:71;anchors_width:308;anchors_x:30;anchors_y:95}D{i:7;anchors_height:71;anchors_width:308;anchors_x:30;anchors_y:95}
-D{i:10;anchors_height:71;anchors_width:308;anchors_x:30;anchors_y:95}D{i:6;anchors_height:100;anchors_width:100;anchors_x:30;anchors_y:95}
-}
-##^##*/

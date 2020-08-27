@@ -12,7 +12,7 @@ Written in QtQml, Javascript, Python and powered by Artificial Intelligence, Car
 Let's get the source down to your machine and get the requirements set up. please make sure git and python has been installed on your machine.
 
 ```bash
-git clone http://github.com/rubbieKelvin/carlie.git
+git clone https://github.com/rubbieKelvin/carlie.git
 cd carlie
 python -m pip install -r requirements.txt
 ```
