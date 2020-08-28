@@ -8,6 +8,8 @@ Rectangle {
     width: 1000
     height:  50
 
+    property var pages: []
+
     Image {
         y: 16
         width: 79
@@ -34,7 +36,7 @@ Rectangle {
             Label{
                 color: App.style.text_b
                 anchors.fill: parent
-                text: qsTr(name)
+                text: modelData.title
                 font.capitalization: Font.Capitalize
                 font.weight: Font.Medium
                 font.pixelSize: 14
@@ -42,15 +44,7 @@ Rectangle {
                 verticalAlignment: Text.AlignVCenter
             }
         }
-        model: ListModel {
-            ListElement {
-                name: "timesheet"
-            }
-
-            ListElement {
-                name: "settings"
-            }
-        }
+        model: pages
         highlight: Rectangle{
             color: "transparent"
 

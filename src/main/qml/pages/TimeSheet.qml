@@ -9,6 +9,7 @@ Page{
     id: root
     width: 1000
     height: 650
+    title: "TimeSheet"
 
     function reloadtimesheet() {
         timesheet.reload();
@@ -17,19 +18,11 @@ Page{
     Rectangle{
         color: App.style.light
         anchors.fill: parent
-        
-        Components.Navigation{
-            id: navigation
-            height: 50   
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.right: parent.right
-        }
 
         Rectangle{
             id: rectangle
             anchors.left: parent.left
-            anchors.top: navigation.bottom
+            anchors.top: parent.top
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             

@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.9
 
 import "../js/main.js" as App
 import "pages/" as Pages
+import "components/" as Components
 
 ApplicationWindow{
     id: window
@@ -13,8 +14,22 @@ ApplicationWindow{
 
     font.family: "poppins"
 
+    Components.Navigation{
+        id: navigation
+        height: 50   
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.right: parent.right
+        pages: [tspage]
+    }
+
     StackLayout {
-        anchors.fill: parent
+        id: pagestack        
+        anchors.left: parent.left
+        anchors.top: navigation.bottom
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        
 
         Pages.TimeSheet{
             id: tspage
