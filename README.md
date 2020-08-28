@@ -68,14 +68,6 @@ Pages.MyPage{
 }
 ```
 
-Append the id given to your node to the list at `Components.Navigation[id=navigation]` at `./src/main/qml/main.qml`
-```qml
-Components.Navigation{
-    id: navigation
-    pages: [..., mypage] // put your page id in the list
-}
-```
-
 ### Javascript
 If you know little javascript, you can create logic for pages and components. you can create a new javascript file in `./src/main/js/`. To know more about Qt APIs for js, check this article.
 

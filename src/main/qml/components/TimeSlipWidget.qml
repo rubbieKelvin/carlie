@@ -15,6 +15,7 @@ ColumnLayout{
     property var timeline: []
     property var datetime: new App.DateTime()
     property string headerlabel: datetime.dayString(true)
+    property string status: ""
 
     signal pinned(var datetime)
     signal taskEdited(string id, var newdata)
@@ -101,7 +102,7 @@ ColumnLayout{
         ToolTip{
             id: sheettip
             visible: false
-            text: pointtotime(sheetmouse.mouseY).toLocaleTimeString()
+            text: pointtotime(sheetmouse.mouseY).toLocaleTimeString()+" "+status
             delay: 500
         }
         
@@ -118,8 +119,13 @@ ColumnLayout{
             onMouseYChanged:{
                 let now = new Date();
                 let time = pointtotime(mouseY);
-                if (now>time) cursorShape = Qt.ForbiddenCursor;
-                else cursorShape = Qt.CrossCursor;
+                if (now>time){
+                    cursorShape = Qt.ForbiddenCursor;
+                    status = "[Cannot create an activity here, date has passed]"
+                }else{
+                    cursorShape = Qt.CrossCursor;
+                    status = "";
+                }
             }
         }
         

@@ -8,7 +8,7 @@ Rectangle {
     width: 1000
     height:  50
 
-    property var pages: []
+    property var stacklayout
 
     Image {
         y: 16
@@ -32,19 +32,36 @@ Rectangle {
         delegate: Rectangle{
             height: 50
             width: 70
+            id: selfmodel
 
             Label{
-                color: App.style.text_b
+                color: (navlist.currentItem===selfmodel)?App.style.text_a:App.style.text_b
                 anchors.fill: parent
                 text: modelData.title
                 font.capitalization: Font.Capitalize
-                font.weight: Font.Medium
                 font.pixelSize: 14
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }
+
+            MouseArea{
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+
+                onClicked: {
+                    let _children = [];
+
+                    for (let i=0; i<stacklayout.children.length; i++){
+                        _children.push(stacklayout.children[i]);
+                    }
+
+                    let index = _children.findIndex(i => i===modelData);
+                    navlist.currentIndex = index;
+                    stacklayout.currentIndex = index;
+                }
+            }
         }
-        model: pages
+        model: stacklayout.children
         highlight: Rectangle{
             color: "transparent"
 
@@ -70,19 +87,24 @@ Rectangle {
             id: username
             width: 105
             height: 18
-            text: qsTr("Rubbiekelvin")
             renderType: Text.NativeRendering
             Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
             Layout.fillHeight: false
             Layout.fillWidth: true
             font.pixelSize: 12
+
+            Component.onCompleted: {
+                let environ = oslib.environ();
+                environ = JSON.parse(environ);
+                this.text = qsTr(environ["USER"]);
+            }
         }
 
         Label {
             id: workhr
             width: 105
             height: 20
-            text: qsTr("69 hrs this week")
+            text: qsTr("0 hrs this week")
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillHeight: false
             Layout.fillWidth: true

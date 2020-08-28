@@ -20,7 +20,7 @@ ApplicationWindow{
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.right: parent.right
-        pages: [tspage]
+        stacklayout: pagestack
     }
 
     StackLayout {
@@ -29,7 +29,6 @@ ApplicationWindow{
         anchors.top: navigation.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        
 
         Pages.TimeSheet{
             id: tspage

@@ -100,6 +100,7 @@ Calendar{
                     text: "<"
                     Layout.preferredHeight: 32
                     Layout.preferredWidth: 32
+                    flat: true
 
                     onClicked: root.showPreviousMonth()
                 }
@@ -115,6 +116,7 @@ Calendar{
 
                 Button{
                     text: ">"
+                    flat: true
                     Layout.preferredHeight: 32
                     Layout.preferredWidth: 32
 

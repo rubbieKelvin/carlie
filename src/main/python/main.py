@@ -1,6 +1,9 @@
 import sys, os
 from PySide2 import QtQml
+
+from carlieqml.oslib import Os
 from carlieqml.core import Carlie
+
 from fbs_runtime.application_context.PySide2 import ApplicationContext
 
 
@@ -10,10 +13,15 @@ if __name__ == '__main__':
     os.environ["QT_QUICK_CONTROLS_STYLE"] = "Material"
 
     appctxt = ApplicationContext()       # 1. Instantiate ApplicationContext
+
+    # plugin instances
     carlie = Carlie()
+    oslib = Os()
 
     engine = QtQml.QQmlApplicationEngine()
+    
     engine.rootContext().setContextProperty("carlie", carlie)
+    engine.rootContext().setContextProperty("oslib", oslib)
 
     engine.load(os.path.join(filedir, "..", "qml", "main.qml"))
 
