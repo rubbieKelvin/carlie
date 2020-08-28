@@ -4,7 +4,7 @@
 
 ## About
 
-Written in [QtQml](https://doc.qt.io/qt-5/qmlrefrence.html), [Javascript](https://doc.qt.io/qt-5/qtqml-javascript-topic.html), [Python](https://doc.qt.io/qt-for-python) and powered by Artificial Intelligence, Carlie is a smart personal assistant for developers, primarily focused on exponetially increasing the productivity of the developer. If you know any feature you might need to make your time as a developer easier, you might as well include it in the feature section below.
+Written in [QtQml](https://doc.qt.io/qt-5/qmlreference.html), [Javascript](https://doc.qt.io/qt-5/qtqml-javascript-topic.html), [Python](https://doc.qt.io/qtforpython/) and powered by Artificial Intelligence, Carlie is a smart personal assistant for developers, primarily focused on exponetially increasing the productivity of the developer. If you know any feature you might need to make your time as a developer easier, you might as well include it in the feature section below.
 
 ## Features
 * Recording daily activities
@@ -81,6 +81,7 @@ If you know little javascript, you can create logic for pages and components. yo
 
 #### Loading javascript in qml
 create a file `./src/main/js/file.js`
+
 ```js
 const echo = message => console.log(`you said ${message}`);
 ```
