@@ -1,8 +1,36 @@
 .pragma library
 
+
+const style = {
+    primary_a: "#A953FF",
+    primary_b: "#E1A0FF",
+    primary_c: "#BC0EF9",
+
+    text_a: "#3D2742",
+    text_b: "#C39CCD",
+
+    light: "#FDF3FF",
+
+    orange: "#FEC25A",
+    blue:   "#538FFF",
+    red:    "#FF7976",
+    green:  "#6FCF97",
+    purple: "#9B51E0",
+    grey:   "#828282"
+};
+
+// checks if a number is in-between 2 numbers
 const inrange = (i, start, stop) => start <= i && i <= stop;
+
 const isnone = value => value === null || value === undefined;
 
+
+/**
+ * returns the date with the smallest time, irrespective of the year, month and day
+ * @param {Date} date1 
+ * @param {Date} date2
+ * @returns Date 
+ */
 const mintime = (date1, date2) => {
     if (date1.getHours() < date2.getHours()){
         return date1;
@@ -19,6 +47,13 @@ const mintime = (date1, date2) => {
     }
 };
 
+
+/**
+ * returns the date with the biggest time, irrespective of the year, month and day
+ * @param {Date} date1 
+ * @param {Date} date2
+ * @returns Date
+ */
 const maxtime = (date1, date2) => {
     if (date1.getHours() > date2.getHours()){
         return date1;
@@ -35,6 +70,13 @@ const maxtime = (date1, date2) => {
     }
 };
 
+
+/**
+ * returns a list of numbers beginning with `from` and ending with to-1
+ * @param {Number} from 
+ * @param {Number} to
+ * @returns Array
+ */
 const range = (from, to) => {
     let result = [];
     for (let i=from; i<to; i++) {
@@ -180,24 +222,6 @@ class DateRange{
         return result;
     }
 }
-
-const style = {
-    primary_a: "#A953FF",
-    primary_b: "#E1A0FF",
-    primary_c: "#BC0EF9",
-
-    text_a: "#3D2742",
-    text_b: "#C39CCD",
-
-    light: "#FDF3FF",
-
-    orange: "#FEC25A",
-    blue:   "#538FFF",
-    red:    "#FF7976",
-    green:  "#6FCF97",
-    purple: "#9B51E0",
-    grey:   "#828282"
-};
 
 const Random = {
     choice(arr){
