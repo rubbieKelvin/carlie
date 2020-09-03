@@ -29,6 +29,14 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
+    Rectangle{
+        id: overlay
+        color: "#1f000000"
+        anchors.fill: parent
+        visible: mouse.hoverEnabled && hovered
+        radius: root.radius
+    }
+
     MouseArea {
         id: mouse
         anchors.fill: parent

@@ -11,7 +11,7 @@ import "./javascript/style.js" as Ui
 import "./components/buttons" as UiButtons
 
 // Python Plugins
-import QPyUi 1.0
+import Carlie.Plugins 1.0
 
 // application window
 Window{
@@ -21,7 +21,7 @@ Window{
     height: 650
 
     // properties
-    property string theme: Ui.Theme.Dark
+    property string theme: Ui.Theme.Light
 
     // material bindings
     Material.accent: Ui.color("Blue", theme)
@@ -58,7 +58,7 @@ Window{
         id: sidebar
         width: 60
         height: parent.height
-        color: Ui.color("BG", theme)
+        color: Ui.color("Gray6", theme)
         layer.enabled: true
         layer.effect: DropShadow {
             color: "#34000000"

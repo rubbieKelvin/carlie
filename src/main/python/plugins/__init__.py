@@ -1,2 +1,4 @@
-def pluginlabel(className:object, name:str) -> tuple:
-    return className, "QPyUi", 1, 0, name
+from PySide2 import QtCore
+
+def pluginlabel(className:QtCore.QObject, name:str) -> tuple:
+    return className, "Carlie.Plugins", 1, 0, name
