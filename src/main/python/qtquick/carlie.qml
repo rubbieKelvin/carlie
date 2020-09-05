@@ -6,7 +6,8 @@ import QtQuick.Controls 2.9
 import QtGraphicalEffects 1.12
 import QtQuick.Controls.Material 2.0
 
-// Javascript
+// Javascript & qml
+import "./pages/" as UiPages
 import "./javascript/style.js" as Ui
 import "./components/buttons" as UiButtons
 
@@ -21,13 +22,17 @@ Window{
     height: 650
 
     // properties
-    property string theme: Ui.Theme.Light
+    property var theme: "Light"
 
     // material bindings
     Material.accent: Ui.color("Blue", theme)
     Material.theme: (theme === Ui.Theme.Light) ? Material.Light : Material.Dark
+
     
-    // sidebar
+    Component.onCompleted: {
+        theme = JSON.parse(storage.getSetting("theme"));
+    }
+    
     Rectangle {
         anchors.left: sidebar.right
         anchors.right: parent.right
@@ -41,16 +46,23 @@ Window{
             y: 16
             width: 174
             height: 19
-            text: stack.currentItem.title
+            text: stack.children[stack.currentIndex].title
         }
 
-        StackView {
+        StackLayout {
             id: stack
             anchors.topMargin: 64
             anchors.fill: parent
-            initialItem: "./pages/schedule-page.qml"
 
-            onCurrentItemChanged: currentItem.theme = theme
+            UiPages.Schedule{
+                theme: theme
+                width: parent.width
+                height: parent.height
+
+                
+                Component.onCompleted: print(stack.width)
+                
+            }
         }
     }
 

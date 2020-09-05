@@ -6,7 +6,8 @@ import "../javascript/style.js" as Ui
 
 Page{
     id: root
-    title: "Notes"
+    title: "Search"
     property string theme: Ui.Theme.Light
-
+    property int parentHidth
+    property int parentHeight
 }

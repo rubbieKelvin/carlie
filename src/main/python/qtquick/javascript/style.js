@@ -6,7 +6,7 @@ const Colors = {
                 Yellow: "#FFCC00",
                 Green:  "#27AE60",
                 Teal:   "#5AC8FA",
-                Blue:   "#5000D8",
+                Blue:   "#421bb6",
                 Indigo: "#5856D6",
                 Purple: "#AF52DE",
                 Pink:   "#FF2D55",
