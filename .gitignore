@@ -1,5 +1,6 @@
-**/__pycache__
 venv
+**/__pycache__
 **/*.usecase.*
 **/*.db
 **/*.pickle
+**/.ipynb_checkpoints

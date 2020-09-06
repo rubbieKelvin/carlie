@@ -13,10 +13,11 @@ class Carlie(chatterbot.ChatBot):
             storage_adapter='chatterbot.storage.SQLStorageAdapter',
             database_uri='sqlite:///carlie.database.db',
             logic_adapters=[
-                'chatterbot.logic.BestMatch'
+                'chatterbot.logic.BestMatch',
+                "carlie.logic.PersonalAILogicAdapter"
             ],
             preprocessors=[
-                "carlie.preprocessors.attach_intent"
+                "carlie.preprocessors.classify_statement"
             ],
             carlie_data_file=os.path.join(
                 os.path.split(__file__)[0],
