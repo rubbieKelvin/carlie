@@ -1,10 +1,12 @@
 {
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Carlie",
+            "label": "echo",
             "type": "shell",
-            "command": "python src/main/python/test.py; fbs run",
+            "command": "python -m carlie",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

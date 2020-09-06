@@ -1,0 +1,15 @@
+{
+    "intents": {
+        "greeting.normal.action":  {
+            "statement": ["hello", "hi", "howdy", "whats up"],
+            "response_intent": ["greeting.normal.reaction", "greeting.normal.action"],
+            "entities": []
+        },
+
+        "greetings.normal.reaction": {
+            "statement": ["i am good", "im good", "i ve been better", "i'm doing awesome"],
+            "response_intent": [],
+            "entities": []
+        }
+    }
+}
